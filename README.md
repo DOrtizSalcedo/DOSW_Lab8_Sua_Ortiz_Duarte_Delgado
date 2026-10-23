@@ -1,1 +1,1 @@
-# DOSW_Lab8_Sua_Ortiz_Duarte_Delgado
+# Laboratorio 8
