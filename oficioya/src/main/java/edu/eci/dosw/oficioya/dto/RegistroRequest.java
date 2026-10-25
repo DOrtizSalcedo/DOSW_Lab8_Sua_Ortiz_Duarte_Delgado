@@ -10,11 +10,11 @@ import java.time.LocalDate;
 
 public record RegistroRequest(@NotBlank String nombre,
                               @NotBlank @Email String correo,
-                              @NotBlank String telefono,
-                              @NotBlank @Size(min = 8) String password_hash,
+                              String telefono,
+                              @Size(min = 8) String password_hash,
                               @NotNull Rol rol,
-                              @NotBlank String oficio_principal,
-                              @NotBlank String zona,
+                              String oficio_principal,
+                              String zona,
                               @NotNull LocalDate fecha_creacion
 ) {
     public RegistroRequest {

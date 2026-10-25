@@ -4,7 +4,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
 public record LoginRequest(@NotBlank @Email String correo,
-                           @NotBlank String password) {
+                           String password) {
     public LoginRequest {
         if(correo != null) correo = correo.trim();
     }
