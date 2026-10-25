@@ -47,7 +47,7 @@ public class Usuario {
     }
 
     public Usuario(String nombre, String correo, String telefono,
-                   String password_hash, Rol rol, String oficio_principal, String zona) {
+                   String password_hash, Rol rol, String oficio_principal, String zona,  LocalDate fecha_creacion) {
         this.nombre = nombre;
         this.correo = correo;
         this.telefono = telefono;
@@ -55,7 +55,7 @@ public class Usuario {
         this.rol = rol;
         this.oficio_principal = oficio_principal;
         this.zona = zona;
-        this.fecha_creacion = LocalDate.now();
+        this.fecha_creacion = fecha_creacion;
     }
 
     public Long getId() {

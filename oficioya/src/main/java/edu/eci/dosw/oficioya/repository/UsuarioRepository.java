@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     List<Usuario> findByCorreo(String correo);
+    boolean existsByCorreo(String correo);
 }
