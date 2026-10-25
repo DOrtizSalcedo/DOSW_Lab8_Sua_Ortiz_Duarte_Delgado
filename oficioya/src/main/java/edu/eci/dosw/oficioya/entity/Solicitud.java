@@ -29,7 +29,6 @@ public class Solicitud {
     @Column(nullable = false)
     private EstadoSolicitud estado;
 
-    @NotNull
     @Column(nullable = false)
     private LocalDate fecha_creacion;
 

@@ -13,8 +13,6 @@ public class UsuarioMapper {
         return new UsuarioResponse(
                 usuario.getId(),
                 usuario.getNombre(),
-                usuario.getCorreo(),
-                usuario.getTelefono(),
                 usuario.getRol(),
                 usuario.getOficio_principal(),
                 usuario.getZona(),
