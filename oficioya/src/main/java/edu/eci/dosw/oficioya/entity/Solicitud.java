@@ -9,20 +9,21 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "solicitudes")
 public class Solicitud {
-    @ManyToOne
-    @JoinColumn(name = "contratante_id", nullable = false)
-    private Usuario contratante;
-
-    @ManyToOne
-    @JoinColumn(name = "trabajador_id", nullable = false)
-    private Usuario trabajador;
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "contratante_id", nullable = false)
+    private Usuario contratante;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "trabajador_id", nullable = false)
+    private Usuario trabajador;
+
+    @NotBlank
     @Column(nullable = false)
-    private String description;
+    private String descripcion;
 
     @NotNull
     @Enumerated(EnumType.STRING)
@@ -36,12 +37,20 @@ public class Solicitud {
     }
 
     public Solicitud(Usuario contratante, Usuario trabajador,
-                     String description, EstadoSolicitud estado, LocalDate fecha_creacion) {
+                     String descripcion, EstadoSolicitud estado, LocalDate fecha_creacion) {
         this.contratante = contratante;
         this.trabajador = trabajador;
-        this.description = description;
+        this.descripcion = descripcion;
         this.estado = estado;
         this.fecha_creacion = fecha_creacion;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Usuario getContratante() {
@@ -60,11 +69,12 @@ public class Solicitud {
         this.trabajador = trabajador;
     }
 
-    public String getDescription() {
-        return description;
+    public String getDescripcion() {
+        return descripcion;
     }
-    public void setDescription(String description) {
-        this.description = description;
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
     public EstadoSolicitud getEstado() {
