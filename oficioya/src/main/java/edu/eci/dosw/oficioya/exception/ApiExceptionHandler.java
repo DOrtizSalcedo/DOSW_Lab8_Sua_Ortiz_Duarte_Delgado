@@ -26,6 +26,18 @@ public class ApiExceptionHandler {
                 ApiError.of(400, "Bad Request", excepcion.getMessage(), solicitud.getRequestURI()));
     }
 
+    @ExceptionHandler(RecursoNoEncontradoException.class)
+    public ResponseEntity<ApiError> noEncontrado(RecursoNoEncontradoException excepcion, HttpServletRequest solicitud) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                ApiError.of(404, "Not Found", excepcion.getMessage(), solicitud.getRequestURI()));
+    }
+
+    @ExceptionHandler(EstadoInvalidoException.class)
+    public ResponseEntity<ApiError> estadoInvalido(EstadoInvalidoException excepcion, HttpServletRequest solicitud) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(
+                ApiError.of(409, "Conflict", excepcion.getMessage(), solicitud.getRequestURI()));
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ApiError> datosInvalidos(MethodArgumentNotValidException excepcion, HttpServletRequest solicitud) {
         return ResponseEntity.badRequest().body(
