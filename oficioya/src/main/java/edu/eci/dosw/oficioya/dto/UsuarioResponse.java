@@ -6,8 +6,6 @@ import java.time.LocalDate;
 
 public record UsuarioResponse (Long id,
                                String nombre,
-                               String correo,
-                               String telefono,
                                Rol rol,
                                String oficio_principal,
                                String zona,
