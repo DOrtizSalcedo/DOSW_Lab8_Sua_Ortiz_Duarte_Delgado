@@ -1,5 +1,12 @@
 package edu.eci.dosw.oficioya.service;
 
+import java.util.EnumSet;
+import java.util.Set;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
 import edu.eci.dosw.oficioya.dto.LoginRequest;
 import edu.eci.dosw.oficioya.dto.LoginResponse;
 import edu.eci.dosw.oficioya.dto.RegistroRequest;
@@ -11,15 +18,7 @@ import edu.eci.dosw.oficioya.exception.CredencialesInvalidasException;
 import edu.eci.dosw.oficioya.exception.RolNoPermitidoException;
 import edu.eci.dosw.oficioya.mapper.UsuarioMapper;
 import edu.eci.dosw.oficioya.repository.UsuarioRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-
-import javax.security.auth.login.CredentialNotFoundException;
-import java.util.EnumSet;
-import java.util.Locale;
-import java.util.Set;
+import edu.eci.dosw.oficioya.security.JwtService;
 
 @Service
 public class UsuarioService {

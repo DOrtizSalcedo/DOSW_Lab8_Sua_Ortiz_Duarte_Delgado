@@ -25,6 +25,7 @@ import edu.eci.dosw.oficioya.entity.Usuario;
 import edu.eci.dosw.oficioya.exception.CredencialesInvalidasException;
 import edu.eci.dosw.oficioya.mapper.UsuarioMapper;
 import edu.eci.dosw.oficioya.repository.UsuarioRepository;
+import edu.eci.dosw.oficioya.security.JwtService;
 
 @ExtendWith(MockitoExtension.class)
 class UsuarioServiceTest {
