@@ -13,34 +13,28 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
     @Column(nullable = false)
     private String nombre;
 
-    @NotBlank
     @Column(unique = true)
     private String correo;
 
-    @NotBlank
     @Column(nullable = false)
     private String telefono;
 
-    @NotBlank
     @Column(nullable = false)
     private String password_hash;
 
-    @NotBlank
+    @NotNull
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Rol rol;
 
-    @NotBlank
     private String oficio_principal;
 
-    @NotBlank
     private String zona;
 
-    @NotBlank
+    @NotNull
     private LocalDate fecha_creacion;
 
     public Usuario() {

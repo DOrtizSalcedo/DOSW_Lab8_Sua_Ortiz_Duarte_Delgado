@@ -1,4 +1,4 @@
-package edu.eci.dosw.oficioya.service;
+package edu.eci.dosw.oficioya.security;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
