@@ -6,6 +6,8 @@ import edu.eci.dosw.oficioya.exception.RecursoNoEncontradoException;
 import edu.eci.dosw.oficioya.mapper.PerfilMapper;
 import edu.eci.dosw.oficioya.repository.UsuarioRepository;
 import org.springframework.stereotype.Service;
+import edu.eci.dosw.oficioya.dto.PerfilPublico;
+import edu.eci.dosw.oficioya.entity.Rol;
 import java.util.List;
 
 @Service
@@ -20,10 +22,20 @@ public class PerfilService {
     }
 
     public PerfilPropio miPerfil(String correo) {
-        List<Usuario> encontrados = usuarioRepository.findByCorreo(correo);
-        if (encontrados.isEmpty()) {
-            throw new RecursoNoEncontradoException("Usuario no encontrado");
-        }
-        return mapper.toPropio(encontrados.get(0));
+        Usuario u = usuarioRepository.findByCorreo(correo)
+                .orElseThrow(() -> new RecursoNoEncontradoException("Usuario no encontrado"));
+        return mapper.toPropio(u);
+    }
+
+    public List<PerfilPublico> listarTrabajadores() {
+        return usuarioRepository.findByRol(Rol.TRABAJADOR).stream()
+                .map(mapper::toPublico)
+                .toList();
+    }
+
+    public PerfilPublico obtenerTrabajador(Long id) {
+        return usuarioRepository.findByIdAndRol(id, Rol.TRABAJADOR)
+                .map(mapper::toPublico)
+                .orElseThrow(() -> new RecursoNoEncontradoException("Trabajador no encontrado"));
     }
 }
