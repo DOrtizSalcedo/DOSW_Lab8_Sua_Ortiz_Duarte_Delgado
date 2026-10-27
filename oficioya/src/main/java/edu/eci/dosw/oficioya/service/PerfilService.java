@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import edu.eci.dosw.oficioya.dto.PerfilPublico;
 import edu.eci.dosw.oficioya.entity.Rol;
 import java.util.List;
+import edu.eci.dosw.oficioya.dto.PerfilAdmin;
 
 @Service
 public class PerfilService {
@@ -37,5 +38,11 @@ public class PerfilService {
         return usuarioRepository.findByIdAndRol(id, Rol.TRABAJADOR)
                 .map(mapper::toPublico)
                 .orElseThrow(() -> new RecursoNoEncontradoException("Trabajador no encontrado"));
+    }
+
+    public List<PerfilAdmin> listarParaAdmin() {
+        return usuarioRepository.findAll().stream()
+                .map(mapper::toAdmin)
+                .toList();
     }
 }
