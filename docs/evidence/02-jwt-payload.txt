@@ -1,0 +1,7 @@
+# Header y payload decodificados del JWT de juan@example.com
+# El token completo no se incluye (regla: no subir tokens reales)
+
+Header:
+{"alg":"HS256"}
+Payload:
+{"sub":"juan@example.com","role":"CONTRATANTE","iss":"oficioya","iat":1793229492,"exp":1793231292}
