@@ -1,0 +1,16 @@
+# 404: con el token de Nicolás se pide la solicitud 1 de Juan (ataque 4)
+# Petición: GET /api/v1/solicitudes/1 con Authorization: Bearer <TOKEN_DE_NICOLAS>
+# Fecha: 2026-10-28 18:18
+
+HTTP/1.1 404 
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 0
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: SAMEORIGIN
+Content-Type: application/json
+Transfer-Encoding: chunked
+Date: Wed, 28 Oct 2026 23:18:13 GMT
+
+{"timestamp":"2026-10-28T18:18:13.2124499","status":404,"error":"Not Found","mensaje":"Solicitud no encontrada","ruta":"/api/v1/solicitudes/1"}
