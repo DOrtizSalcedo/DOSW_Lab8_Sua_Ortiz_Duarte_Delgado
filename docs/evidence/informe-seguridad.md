@@ -31,3 +31,19 @@ coincidir y sin la clave no se puede generar un nueva firma dado que el payload 
 
 Se responde 404 y no 403 porque el error 403 confirma que la solicitud existe pero pertenece a otro rol, enumerándose los ids.
 Así mismo, la consulta ya incluye al participante por lo que la solicitud ajena y existente dan la misma respuesta.
+
+### 4. ¿Por qué el contratante no envía su propio id al crear una solicitud?
+
+*Respuesta:*
+
+Porque cualquier dato del cuerpo lo controla el cliente y se puede falsificar. Si POST /api/v1/solicitudes recibiera un contratanteId, Nicolas
+podrí crear solicitudes a nombre de Juan solo cambiando ese número. Por eso SolicitudRequest solo trae trabajadorId y descripcion, y el contratante sale del token: SolicitudController pasa auth.getName() (el sub del JWT, que va firmado) y SolicitudService busca al usuario
+con ese correo. Como la firma no se puede alterar sin el JWT_SECRET, el contratante siempre es quien inició sesión.
+
+### 5. ¿Por qué desactivaron CSRF? ¿Qué limitación tiene el cierre de sesión sin revocación de tokens?
+
+*Respuesta:*
+
+-CSRF aprovecha que el navegador envía por sí solo las cookies de sesión aunque la petición la haga otra pgina. Nuestra API no usa cookies: en SecurityConfig lasesión es STATELESS y el token viaja en el header Authorization, que el navegador nunca agrega por su cuenta. Por eso csrf.disable() no abre ese ataque.
+
+-La limitación es que el servidor no guarda los tokens emitidos, así que no puede invalidarlos. Cerrar sesión solo borra el token del cliente: si alguien y lo copió, lo puede seguir usando hasta que venza. Para revocarlo haría falta una lista negra de tokens o tokens de acceso más cortos con un refresh token que sí se pueda revocar.
