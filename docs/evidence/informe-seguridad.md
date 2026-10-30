@@ -27,17 +27,17 @@ coincidir y sin la clave no se puede generar un nueva firma dado que el payload 
 
 * **Error 401:** un login con clave errónea o cualquier endpoint sin token o con token vencido
 * **Error 403:** un token de CONTRATANTE llamando al endpoint /api/v1/admin/usuarios o un ADMIN llama al endpoint a /solicitudes
-* **Error 404:** un contratante pide una solicitud de otro rol
+* **Error 404:** un contratante pide una solicitud que es de otro contratante. 
 
-Se responde 404 y no 403 porque el error 403 confirma que la solicitud existe pero pertenece a otro rol, enumerándose los ids.
-Así mismo, la consulta ya incluye al participante por lo que la solicitud ajena y existente dan la misma respuesta.
+Se responde 404 y no 403 porque el 403 confirmaría que la solicitud existe y pertenece a otro usuario, y así se podrían ir probando ids. 
+Como la consulta ya incluye al participante, una solicitud ajena y una inexistente dan la misma respuesta.
 
 ### 4. ¿Por qué el contratante no envía su propio id al crear una solicitud?
 
 *Respuesta:*
 
 Porque cualquier dato del cuerpo lo controla el cliente y se puede falsificar. Si POST /api/v1/solicitudes recibiera un contratanteId, Nicolas
-podrí crear solicitudes a nombre de Juan solo cambiando ese número. Por eso SolicitudRequest solo trae trabajadorId y descripcion, y el contratante sale del token: SolicitudController pasa auth.getName() (el sub del JWT, que va firmado) y SolicitudService busca al usuario
+podría crear solicitudes a nombre de Juan solo cambiando ese número. Por eso SolicitudRequest solo trae trabajadorId y descripcion, y el contratante sale del token: SolicitudController pasa auth.getName() (el sub del JWT, que va firmado) y SolicitudService busca al usuario
 con ese correo. Como la firma no se puede alterar sin el JWT_SECRET, el contratante siempre es quien inició sesión.
 
 ### 5. ¿Por qué desactivaron CSRF? ¿Qué limitación tiene el cierre de sesión sin revocación de tokens?
@@ -53,4 +53,4 @@ con ese correo. Como la firma no se puede alterar sin el JWT_SECRET, el contrata
 
 *Respuesta:* 
 
-Si la clave se sube a GitHub, cualquiera podría fabricar un token con la firma correcta y el rol que quiera, incluso ADMIN, y el servidor no lo distinguiría de uno real. Borrarla en un commit nuevo no basta porque queda en el historial: habría que cambiarla, y con eso todos los tokens anteriores dejan de funcionar. Si es corta, se puede adivinar probando claves con un token copiado; por eso exigimos 32 bytes o más y la leemos de la variable JWT_SECRET. Para producción guardaríamos los secretos en un gestor como Azure Key Vault, usaríamos HTTPS, tokens de acceso cortos con refresh token revocable, y quitaríamos lo que es solo de desarrollo, como la consola de H2 y ddl-auto=update.
+Si la clave se sube a GitHub, cualquiera podría fabricar un token con la firma correcta y el rol que quiera, incluso ADMIN y el servidor no lo distinguiría de uno real. Borrarla en un commit nuevo no basta porque queda en el historial: habría que cambiarla, y con eso todos los tokens anteriores dejan de funcionar. Si es corta, se puede adivinar probando claves con un token copiado; por eso exigimos 32 bytes o más y la leemos de la variable JWT_SECRET. Para producción guardaríamos los secretos en un gestor como Azure Key Vault, usaríamos HTTPS, tokens de acceso cortos con refresh token revocable, y quitaríamos lo que es solo de desarrollo, como la consola de H2 y ddl-auto=update.
