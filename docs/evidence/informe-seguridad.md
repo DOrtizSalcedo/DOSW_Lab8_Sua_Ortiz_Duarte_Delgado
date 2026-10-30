@@ -47,3 +47,10 @@ con ese correo. Como la firma no se puede alterar sin el JWT_SECRET, el contrata
 -CSRF aprovecha que el navegador envía por sí solo las cookies de sesión aunque la petición la haga otra pgina. Nuestra API no usa cookies: en SecurityConfig lasesión es STATELESS y el token viaja en el header Authorization, que el navegador nunca agrega por su cuenta. Por eso csrf.disable() no abre ese ataque.
 
 -La limitación es que el servidor no guarda los tokens emitidos, así que no puede invalidarlos. Cerrar sesión solo borra el token del cliente: si alguien y lo copió, lo puede seguir usando hasta que venza. Para revocarlo haría falta una lista negra de tokens o tokens de acceso más cortos con un refresh token que sí se pueda revocar.
+
+
+### 6. ¿Qué pasaría si la clave del JWT se sube a GitHub o es corta? ¿Qué cambiarían para producción?
+
+*Respuesta:* 
+
+Si la clave se sube a GitHub, cualquiera podría fabricar un token con la firma correcta y el rol que quiera, incluso ADMIN, y el servidor no lo distinguiría de uno real. Borrarla en un commit nuevo no basta porque queda en el historial: habría que cambiarla, y con eso todos los tokens anteriores dejan de funcionar. Si es corta, se puede adivinar probando claves con un token copiado; por eso exigimos 32 bytes o más y la leemos de la variable JWT_SECRET. Para producción guardaríamos los secretos en un gestor como Azure Key Vault, usaríamos HTTPS, tokens de acceso cortos con refresh token revocable, y quitaríamos lo que es solo de desarrollo, como la consola de H2 y ddl-auto=update.
