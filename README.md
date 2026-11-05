@@ -2,6 +2,8 @@
 
 OficioYa protegido con Spring Security y JWT. API REST con registro, login, perfiles, administración y solicitudes de servicio, con autorización por rol y por propiedad.
 
+Se puede encontrar el repositorio del front [aquí](https://github.com/DOrtizSalcedo/oficioya-front-squad3).
+
 ## Cómo ejecutar
 
 Requisitos: Java 21, Maven y PostgreSQL con una base de datos llamada `oficioya_security`.
